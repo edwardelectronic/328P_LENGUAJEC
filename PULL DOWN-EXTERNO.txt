@@ -1,0 +1,23 @@
+#define F_CPU 16000000
+#include <avr/io.h>
+#include <util/delay.h>
+//PULL DOWN
+int main(void)
+{
+    DDRC |= (1<<PC3);   // Configuro PC3 como salida(1))
+	DDRB &= ~(1<<PB2);	// Configuro PB2  como entrada(0).
+    while (1) 
+    {
+		if((PINB&(1<<PB2))==1) //=(PINB&(1<<PB2))  ? se presiono ?
+            // SI NO SE PRESIONA EL PIN PB2 SERA 0, YA QUE ESTA CONFIGURDO COMO PULL DOWN
+		{
+            while(1){
+                PORTC |= (1<<PC3);
+                _delay_ms(500);
+                PORTC &= ~(1<<PC3);
+                _delay_ms(500);
+                    }
+		}
+        // si es que no se presiona el led no parpadea.
+    }
+}
